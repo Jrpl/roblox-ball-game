@@ -17,6 +17,19 @@ local function onPlayerAdded(player)
     ball.CustomPhysicalProperties = PhysProperties
     ball.CFrame = spawn.WorldCFrame + Vector3.yAxis * (Config.BallDiameter / 2)
     ball:SetAttribute("UserId", player.UserId)
+
+    local attachment = Instance.new("Attachment")
+    attachment.Parent = ball
+    
+    local ballAngularVelocity = Instance.new("AngularVelocity")
+    ballAngularVelocity.Name = "Spin"
+    ballAngularVelocity.Attachment0 = attachment
+    ballAngularVelocity.RelativeTo = Enum.ActuatorRelativeTo.World
+    ballAngularVelocity.MaxTorque = Config.MaxTorque
+    ballAngularVelocity.AngularVelocity = Vector3.zero
+    ballAngularVelocity.Enabled = false
+    ballAngularVelocity.Parent = ball
+
     ball.Parent = workspace
     ball:SetNetworkOwner(player)
     balls[player.UserId] = ball
