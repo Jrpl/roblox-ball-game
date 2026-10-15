@@ -335,27 +335,27 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 		<Item class="Camera" referent="RBXCB4F2218AB1E439D950B5AB8677C6DAC">
 			<Properties>
 				<CoordinateFrame name="CFrame">
-					<X>22.4022598</X>
-					<Y>13.7927113</Y>
-					<Z>0.282653451</Z>
-					<R00>1.48537965e-05</R00>
-					<R01>-0.509052157</R01>
-					<R02>0.860735714</R02>
+					<X>24.4298859</X>
+					<Y>14.1297226</Y>
+					<Z>0.370540142</Z>
+					<R00>0.0767346025</R00>
+					<R01>-0.381566167</R01>
+					<R02>0.921151042</R02>
 					<R10>-0</R10>
-					<R11>0.860735714</R11>
-					<R12>0.509052157</R12>
-					<R20>-1</R20>
-					<R21>-7.56135705e-06</R21>
-					<R22>1.27851936e-05</R22>
+					<R11>0.923875034</R11>
+					<R12>0.382694513</R12>
+					<R20>-0.997051597</R20>
+					<R21>-0.0293659121</R21>
+					<R22>0.0708931759</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>20.680788</X>
-					<Y>12.7746067</Y>
-					<Z>0.282627881</Z>
+					<X>22.5875759</X>
+					<Y>13.3643303</Y>
+					<Z>0.228753179</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -408,12 +408,12 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					<Y>0</Y>
 					<Z>0</Z>
 					<R00>1</R00>
-					<R01>-0</R01>
+					<R01>0</R01>
 					<R02>0</R02>
 					<R10>0</R10>
 					<R11>1</R11>
 					<R12>0</R12>
-					<R20>-0</R20>
+					<R20>0</R20>
 					<R21>0</R21>
 					<R22>1</R22>
 				</CoordinateFrame>
@@ -696,7 +696,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<bool name="BanningEnabled">true</bool>
 			<bool name="CharacterAutoLoads">false</bool>
 			<int name="MaxPlayersInternal">12</int>
-			<int name="PreferredPlayersInternal">0</int>
+			<int name="PreferredPlayersInternal">1</int>
 			<float name="RespawnTime">5</float>
 			<bool name="UseStrafingAnimations">false</bool>
 			<BinaryString name="AttributesSerialize"></BinaryString>
@@ -1073,6 +1073,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<float name="NameDisplayDistance">100</float>
 			<Ref name="PlaceAvatarRules">null</Ref>
 			<int name="PlayerModuleStatus">0</int>
+			<token name="UseImprovedCharacterEvents">0</token>
 			<bool name="UserEmotesEnabled">true</bool>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
@@ -1096,14 +1097,13 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 				<UniqueId name="UniqueId">3d77307d4b3df9f50ae0bd45000007df</UniqueId>
 			</Properties>
-			<Item class="LocalScript" referent="9">
+			<Item class="Folder" referent="RBX5BE6A60ECDE74F5884E82B867F2021F3">
 				<Properties>
-					<ProtectedString name="Source"><![CDATA[print("Hello world, from client!")
-]]></ProtectedString>
-					<bool name="Disabled">false</bool>
-					<Content name="LinkedSource"><null></null></Content>
-					<token name="RunContext">0</token>
-					<string name="ScriptGuid">{B671E647-1CB0-4EE8-A2E9-03076C4B30B0}</string>
+					<Color3 name="IconTint">
+						<R>0</R>
+						<G>0</G>
+						<B>0</B>
+					</Color3>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 					<bool name="DefinesCapabilities">false</bool>
@@ -1112,11 +1112,63 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					<BinaryString name="SerializedOverrides"></BinaryString>
 					<int64 name="SourceAssetId">-1</int64>
 					<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
-					<UniqueId name="UniqueId">3d77307d4b3df9f50ae0bd45000007e0</UniqueId>
+					<UniqueId name="UniqueId">611415562e0adc5f0ae1d6ff0000209b</UniqueId>
 				</Properties>
 				<Item class="LocalScript" referent="RBXD55FB4E38B6D4968BC815975C059774A">
 					<Properties>
-						<ProtectedString name="Source"></ProtectedString>
+						<ProtectedString name="Source"><![CDATA[local Players = game:GetService("Players")
+local localUserId = Players.LocalPlayer.UserId
+local PlayerModule = require(Players.LocalPlayer:WaitForChild("PlayerScripts"):WaitForChild("PlayerModule"))
+local controls = PlayerModule:GetControls()
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Config = require(ReplicatedStorage.Shared.BallConfig)
+
+local function isMyBall(child)
+    return child:IsA("Part") and child:GetAttribute("UserId") == localUserId
+end
+
+local function findMyBall()
+    for _, child in workspace:GetChildren() do
+        if isMyBall(child) then
+            return child
+        end
+    end
+
+    local newChild
+    repeat newChild = workspace.ChildAdded:Wait() until isMyBall(newChild)
+
+    return newChild
+end
+
+local ball = findMyBall()
+workspace.CurrentCamera.CameraType = Enum.CameraType.Custom
+workspace.CurrentCamera.CameraSubject = ball
+print("Camera is now following my ball: " .. ball:GetFullName())
+
+local spin = ball:WaitForChild("Spin")
+local lastFwd = Vector3.new(0, 0, -1)
+RunService.PreSimulation:Connect(function()
+    local moveVector = controls:GetMoveVector()
+    local lookVector = workspace.CurrentCamera.CFrame.LookVector
+    local flat = Vector3.new(lookVector.X, 0, lookVector.Z)
+    local fwd = lastFwd
+
+    if flat.Magnitude >= 0.01 then
+        fwd = flat.Unit
+        lastFwd = fwd
+    end
+
+    local right = fwd:Cross(Vector3.yAxis)
+    local dir = right * moveVector.X - fwd * moveVector.Z
+
+    if dir.Magnitude > 0.01 then
+        spin.Enabled = true
+        spin.AngularVelocity = Vector3.yAxis:Cross(dir.Unit) * Config.MaxSpin
+    else
+        spin.Enabled = false
+    end
+end)]]></ProtectedString>
 						<bool name="Disabled">false</bool>
 						<Content name="LinkedSource"><null></null></Content>
 						<token name="RunContext">0</token>
@@ -1411,6 +1463,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 	</Item>
 	<Item class="AvatarSettings" referent="RBXA4F80880E6914A5D83E0A369244FA2A9">
 		<Properties>
+			<int name="RulesSchemaVersion">0</int>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 			<bool name="DefinesCapabilities">false</bool>
@@ -1425,6 +1478,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 	<Item class="Packages" referent="RBX3E3ACA035C334794A4D24714ADCF084A">
 		<Properties>
 			<bool name="IsDehydrated">false</bool>
+			<bool name="OverridesRecalculated">false</bool>
 			<int name="ShellPackagesCount">0</int>
 			<int name="SkippedInstancesCount">0</int>
 			<BinaryString name="AttributesSerialize"></BinaryString>
@@ -1449,6 +1503,21 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<int64 name="SourceAssetId">-1</int64>
 			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 			<UniqueId name="UniqueId">3d77307d4b3df9f50ae0bd45000007b2</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="ServiceVisibilityService" referent="RBX9BFC8B6B6F7D455296017375C63938C1">
+		<Properties>
+			<BinaryString name="HiddenServices">AAAAAA==</BinaryString>
+			<BinaryString name="VisibleServices">AAAAAA==</BinaryString>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">ServiceVisibilityService</string>
+			<BinaryString name="SerializedOverrides"></BinaryString>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">3d77307d4b3df9f50ae0bd45000007d3</UniqueId>
 		</Properties>
 	</Item>
 	<Item class="LuaWebService" referent="RBX7A92372D306048B1A8D3421BB977B6E8">
@@ -1506,25 +1575,6 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 				<UniqueId name="UniqueId">3d77307d4b3df9f50ae0bd45000007db</UniqueId>
 			</Properties>
-			<Item class="ModuleScript" referent="3">
-				<Properties>
-					<Content name="LinkedSource"><null></null></Content>
-					<ProtectedString name="Source"><![CDATA[return function()
-	print("Hello, world!")
-end
-]]></ProtectedString>
-					<string name="ScriptGuid">{B9A72D56-FE7C-4032-BB30-5555BF7A58DF}</string>
-					<BinaryString name="AttributesSerialize"></BinaryString>
-					<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
-					<bool name="DefinesCapabilities">false</bool>
-					<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
-					<string name="Name">Hello</string>
-					<BinaryString name="SerializedOverrides"></BinaryString>
-					<int64 name="SourceAssetId">-1</int64>
-					<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
-					<UniqueId name="UniqueId">3d77307d4b3df9f50ae0bd45000007dc</UniqueId>
-				</Properties>
-			</Item>
 			<Item class="ModuleScript" referent="RBXB788F568B8124C2FAB1295068B49A96B">
 				<Properties>
 					<Content name="LinkedSource"><null></null></Content>
@@ -1564,14 +1614,13 @@ end
 			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 			<UniqueId name="UniqueId">3d77307d4b3df9f50ae0bd45000007bc</UniqueId>
 		</Properties>
-		<Item class="Script" referent="RBXC43B97DFEC0949FAB94C49DDC62DA3E1">
+		<Item class="Folder" referent="RBX9670D23FD39F40A28C1737D105D1417C">
 			<Properties>
-				<ProtectedString name="Source"><![CDATA[print("Hello test, from server!")
-]]></ProtectedString>
-				<bool name="Disabled">false</bool>
-				<Content name="LinkedSource"><null></null></Content>
-				<token name="RunContext">0</token>
-				<string name="ScriptGuid">{364FD99A-9DE4-4516-B228-63E9CB30288F}</string>
+				<Color3 name="IconTint">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</Color3>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
 				<bool name="DefinesCapabilities">false</bool>
@@ -1580,7 +1629,7 @@ end
 				<BinaryString name="SerializedOverrides"></BinaryString>
 				<int64 name="SourceAssetId">-1</int64>
 				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
-				<UniqueId name="UniqueId">3d77307d4b3df9f50ae0bd4500002002</UniqueId>
+				<UniqueId name="UniqueId">611415562e0adc5f0ae1d6ff00002099</UniqueId>
 			</Properties>
 			<Item class="Script" referent="RBXA6E6802C0F5045C2B62A6F74019400FE">
 				<Properties>
@@ -1588,24 +1637,43 @@ end
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.Shared.BallConfig)
 local PhysProperties = PhysicalProperties.new(Config.Density, Config.Friction, Config.Elasticity, 1, 1)
-local spawn = workspace.Start.Spawn
+local spawn = workspace:WaitForChild("Start"):WaitForChild("Spawn")
 local balls = {}
 
-Players.PlayerAdded:Connect(function(player)
+local function onPlayerAdded(player)
     print("Player joined: " .. player.Name)
     local ball = Instance.new("Part")
     ball.Name = "PlayerBall"
     ball.Anchored = false
     ball.Shape = Enum.PartType.Ball
     ball.Color = Color3.new(0.031373, 0.54902, 0.752941)
+    ball.Material = Enum.Material.Plaster
     ball.Size = Vector3.one * Config.BallDiameter
     ball.CustomPhysicalProperties = PhysProperties
     ball.CFrame = spawn.WorldCFrame + Vector3.yAxis * (Config.BallDiameter / 2)
     ball:SetAttribute("UserId", player.UserId)
+
+    local attachment = Instance.new("Attachment")
+    attachment.Parent = ball
+    
+    local ballAngularVelocity = Instance.new("AngularVelocity")
+    ballAngularVelocity.Name = "Spin"
+    ballAngularVelocity.Attachment0 = attachment
+    ballAngularVelocity.RelativeTo = Enum.ActuatorRelativeTo.World
+    ballAngularVelocity.MaxTorque = Config.MaxTorque
+    ballAngularVelocity.AngularVelocity = Vector3.zero
+    ballAngularVelocity.Enabled = false
+    ballAngularVelocity.Parent = ball
+
     ball.Parent = workspace
     ball:SetNetworkOwner(player)
     balls[player.UserId] = ball
-end)
+end
+
+Players.PlayerAdded:Connect(onPlayerAdded)
+for _, player in Players:GetPlayers() do
+    onPlayerAdded(player)
+end
 
 Players.PlayerRemoving:Connect(function(player)
     print("Player left: " .. player.Name)
@@ -1643,21 +1711,6 @@ end)]]></ProtectedString>
 			<int64 name="SourceAssetId">-1</int64>
 			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 			<UniqueId name="UniqueId">3d77307d4b3df9f50ae0bd45000007bd</UniqueId>
-		</Properties>
-	</Item>
-	<Item class="ServiceVisibilityService" referent="RBX9BFC8B6B6F7D455296017375C63938C1">
-		<Properties>
-			<BinaryString name="HiddenServices">AAAAAA==</BinaryString>
-			<BinaryString name="VisibleServices">AAAAAA==</BinaryString>
-			<BinaryString name="AttributesSerialize"></BinaryString>
-			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
-			<bool name="DefinesCapabilities">false</bool>
-			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
-			<string name="Name">ServiceVisibilityService</string>
-			<BinaryString name="SerializedOverrides"></BinaryString>
-			<int64 name="SourceAssetId">-1</int64>
-			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
-			<UniqueId name="UniqueId">3d77307d4b3df9f50ae0bd45000007d3</UniqueId>
 		</Properties>
 	</Item>
 	<Item class="VideoService" referent="RBX423AD28804BA4EEC848803319EBF009B">
@@ -1787,6 +1840,19 @@ WF9PcmlnaW5hbFRlY2hub2xvZ3lPbkZpbGVMb2FkBAEAAAA=]]></BinaryString>
 			<int64 name="SourceAssetId">-1</int64>
 			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
 			<UniqueId name="UniqueId">3d77307d4b3df9f50ae0bd4500000b36</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="VirtualInputManager" referent="RBX100EC4F8E3334F65883CE4919ECA9C8F">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">VirtualInputManager</string>
+			<BinaryString name="SerializedOverrides"></BinaryString>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">611415562e0adc5f0ae1d6ff0000076d</UniqueId>
 		</Properties>
 	</Item>
 	<SharedStrings>
